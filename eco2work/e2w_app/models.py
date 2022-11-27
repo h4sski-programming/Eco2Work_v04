@@ -1,10 +1,15 @@
 from django.db import models
 
-from const import *
 
 class Activity(models.Model):
+    ACTIVITY_VEHICLE_CHOICES = [
+        ('foot', 'foot'),
+        ('bike', 'bike'),
+        ('scooter', 'scooter'),
+        ]
+
     __tablename__ = 'activity'
-    distance = models.IntegerField(max_length=3)
+    distance = models.IntegerField()
     vehicle = models.CharField(
         max_length=100,
         choices=ACTIVITY_VEHICLE_CHOICES,
