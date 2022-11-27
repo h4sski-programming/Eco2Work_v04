@@ -9,7 +9,7 @@ class Activity(models.Model):
         ]
 
     __tablename__ = 'activity'
-    distance = models.IntegerField()
+    distance = models.PositiveIntegerField()
     vehicle = models.CharField(
         max_length=100,
         choices=ACTIVITY_VEHICLE_CHOICES,
