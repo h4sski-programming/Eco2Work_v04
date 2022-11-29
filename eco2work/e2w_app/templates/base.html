@@ -36,9 +36,15 @@
     </div>
 
     <div class="container">
+        <div class="messages bg-warning px-3 py-0.5">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
         <div id="content" name="content" class="main">
             {% block content %}
             {% endblock %}
+
         </div>
     </div>
 

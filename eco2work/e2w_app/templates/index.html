@@ -1,62 +1,64 @@
 {% extends 'base.html' %}
+
 {% block title %}Index{% endblock %}
+
 {% block content %}
 <div>
-    <h4>Index</h4>
+  <h4>Index</h4>
 </div>
 
 <div>
-    <table class="table table-sm">
-        <tr>
-            <th>ID</th>
-            <th>Distance [km]</th>
-            <th>Vehicle</th>
-            <th>Date</th>
-        </tr>
-        {% for a in activity_all %}
-            <tr>
-                <td>{{ a.id }}</td>
-                <td>{{ a.distance }}</td>
-                <td>{{ a.vehicle }}</td>
-                <td>{{ a.date }}</td>
-            </tr>
+  <table class="table table-sm">
+    <tr>
+      <th>ID</th>
+      <th>Distance [km]</th>
+      <th>Vehicle</th>
+      <th>Date</th>
+    </tr>
+    {% for a in activity_all %}
+    <tr>
+      <td>{{ a.id }}</td>
+      <td>{{ a.distance }}</td>
+      <td>{{ a.vehicle }}</td>
+      <td>{{ a.date }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div>
+  <h5>Testing month table</h5>
+  <div class="table-responsive">
+    <table class="table table-bordered table-sm table-striped">
+      <tr>
+        <th>User</th>
+        <th>Sum</th>
+        <th>Vehicle</th>
+
+        {% for i in days_list %} {% if i == today.day %}
+        <th class="bg-success text-white">{{ i }}</th>
+        {% else %}
+        <th>{{ i }}</th>
+        {% endif %} {% endfor %}
+      </tr>
+
+      {% for i in weeks_number %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td class="text-center">{{ month_sum }}</td>
+        <td>bike</td>
+
+        {% for day in days_list %}
+        <td class="text-center">
+          {% for a in activity_all %} {% if day == a.date.day %}
+          <a>{{ a.distance }}</a>
+          {% endif %} {% endfor %}
+        </td>
         {% endfor %}
+      </tr>
+      {% endfor %}
     </table>
-</div>
-
-<div>
-    <h5>Testing month table</h5>
-    <div class="table-responsive">
-        <table class="table table-bordered table-sm table-striped w-100">
-            <tr>
-                <th>User</th>
-                <th>Sum</th>
-                <th>Vehicle</th>
-
-                {% for i in days_list %}
-                    <th>{{ i }}</th>
-                {% endfor %}
-            </tr>
-
-            {% for i in weeks_number %}
-                <tr>
-                    <td>{{ user.username }}</td>
-                    <td class="text-center">{{ month_sum }}</td>
-                    <td>bike</td>
-
-                    {% for day in days_list %}
-                        <td class="text-center">
-                            {% for a in activity_all %}
-                                {% if day == a.date.day %}
-                                    <a>{{ a.distance }}</a>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+  </div>
 </div>
 
 {% endblock %}
