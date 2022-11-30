@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Activity(models.Model):
@@ -9,6 +10,7 @@ class Activity(models.Model):
         ]
 
     __tablename__ = 'activity'
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default=0)
     distance = models.PositiveIntegerField()
     vehicle = models.CharField(
         max_length=100,

@@ -77,3 +77,9 @@ login: `h4sski`
 mail:   `h4sski.programming@gmail.com`
 password: `H$sskih4sski`
 
+### Other, not used in this project
+
+Virtual environment
+
+    python -m venv .venv
+

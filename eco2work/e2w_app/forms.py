@@ -10,7 +10,12 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-class LoginForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password1']
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label='Username:'
+        )
+    password = forms.CharField(
+        label='Password:',
+        widget=forms.PasswordInput,
+        help_text='Enter your password'
+        )
