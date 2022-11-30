@@ -44,11 +44,29 @@
                 {% endfor %}
             </tr>
 
-            {% for u in test_dic %}
+            {% for u in users_all %}
                 <tr>
-                    <td>{{ u[0] }}</td>
+                    <td>{{ u }}</td>
+                    <td>
+                        {% for usr, sum in month_sum.items %}
+                            {% if usr == u %}
+                                {{ sum }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>bike</td>
+                    {% for day in days_list %}
+                    <td>
+                        {% for a in activity_all %}
+                            {% if a.user == u and a.date.day == day %}
+                                {{ a.distance }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
+
         </table>
     </div>
 </div>
