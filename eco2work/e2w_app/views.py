@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 
 from .models import Activity
 from .forms import RegisterForm, LoginForm
@@ -14,11 +15,12 @@ from .forms import RegisterForm, LoginForm
 def index(request):
     today = date.today()
     month_first_day = today.replace(day=1)
-    month_last_day = today.replace(month=today.month + 1, day=1) - timedelta(days=1)
+    month_last_day = month_first_day + relativedelta(months=+1) - timedelta(days=1)
 
     days_list = [n for n in range(month_first_day.day, month_last_day.day + 1)]
 
-    activity_all = Activity.objects.all()
+    # activity_all = Activity.objects.all()
+    activity_all = Activity.objects.filter(date__month=today.month)
     users_all = User.objects.all()
 
     month_sum = {}

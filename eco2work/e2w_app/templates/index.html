@@ -9,64 +9,67 @@
 
 <div>
     <table class="table table-sm">
-        <tr>
-            <th>ID</th>
-            <th>Distance [km]</th>
-            <th>Vehicle</th>
-            <th>Date</th>
-        </tr>
-        {% for a in activity_all %}
-        <tr>
-            <td>{{ a.id }}</td>
-            <td>{{ a.distance }}</td>
-            <td>{{ a.vehicle }}</td>
-            <td>{{ a.date }}</td>
-        </tr>
-        {% endfor %}
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+            {% for u in users_all %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 
 <div>
-    <h5>Testing month table</h5>
     <div class="table-responsive">
         <table class="table table-bordered table-sm table-striped">
-            <tr>
-                <th>User</th>
-                <th>Sum</th>
-                <th>Vehicle</th>
-
-                {% for i in days_list %}
-                    {% if i == today.day %}
-                        <th class="bg-success text-white">{{ i }}</th>
-                    {% else %}
-                        <th>{{ i }}</th>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-
-            {% for u in users_all %}
+            <thead>
+                <h4>{{ today.year }}-{{ today.month }}</h4>
+            </thead>
+            <tbody>
                 <tr>
-                    <td>{{ u }}</td>
-                    <td>
-                        {% for usr, sum in month_sum.items %}
-                            {% if usr == u %}
-                                {{ sum }}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>bike</td>
-                    {% for day in days_list %}
-                    <td>
-                        {% for a in activity_all %}
-                            {% if a.user == u and a.date.day == day %}
-                                {{ a.distance }}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+                    <th>User</th>
+                    <th>Sum</th>
+                    <th>Vehicle</th>
+
+                    {% for i in days_list %}
+                        {% if i == today.day %}
+                            <th class="bg-success text-white">{{ i }}</th>
+                        {% else %}
+                            <th>{{ i }}</th>
+                        {% endif %}
                     {% endfor %}
                 </tr>
-            {% endfor %}
 
+                {% for u in users_all %}
+                    <tr>
+                        <td>{{ u }}</td>
+                        <td>
+                            {% for usr, sum in month_sum.items %}
+                                {% if usr == u %}
+                                    {{ sum }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>bike</td>
+                        {% for day in days_list %}
+                        <td>
+                            {% for a in activity_all %}
+                                {% if a.user == u and a.date.day == day %}
+                                    {{ a.distance }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </div>
