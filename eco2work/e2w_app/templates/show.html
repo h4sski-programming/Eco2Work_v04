@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div>
+    <table class="table">
+        To be removed
+        <tr>
+            <td>Today is: <h4>{{ year }} - {{ month }}</h4></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <h2>
+        <a href="/show/{{ year_m1 }}-{{ month }}/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
+            </svg>
+        </a>
+        {{ year }}
+        <a href="/show/{{ year_p1 }}-{{ month }}/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+            </svg>
+        </a>
+    </h2>
+
+    <h2>
+        <a href="/show/{{ year }}-{{ month_m1 }}/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
+            </svg>
+        </a>
+        {{ month }}
+        <a href="/show/{{ year }}-{{ month_p1 }}/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+            </svg>
+        </a>
+    </h2>
+
+
+    <table class="table table-bordered table-sm table-striped table-responsive">
+        <tbody class="table">
+            <tr>
+                <th class="col">User</th>
+                <th>Sum</th>
+
+                {% for i in month_number_of_days %}
+                    <th style="width: 30px">{{ i }}</th>
+                {% endfor %}
+            </tr>
+
+            {% for u in users %}
+                <tr>
+                    <td>{{ u.username }}</td>
+                    <td>sum - to do</td>
+                    {% for i in month_number_of_days %}
+                    <td>
+                        {% for a_user, a_list in activities.items %}
+                            {% if a_user == u %}
+                                {% for a in a_list %}
+                                    {% if a.0 == i %}
+                                        {{ a.1 }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

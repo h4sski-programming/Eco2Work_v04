@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div>
+    <h4>Index</h4>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+            {% for u in users_all %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm table-striped">
+            <thead>
+                <a href="/show/{{ today.year }}-{{ today.month }}/">
+                    <h4>{{ today|date:"Y F" }}</h4>
+                </a>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>User</th>
+                    <th>Sum</th>
+                    <th>Vehicle</th>
+
+                    {% for i in days_list %}
+                        {% if i == today.day %}
+                            <th class="bg-success text-white">{{ i }}</th>
+                        {% else %}
+                            <th>{{ i }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+
+                {% for u in users_all %}
+                    <tr>
+                        <td>{{ u }}</td>
+                        <td>
+                            {% for usr, sum in month_sum.items %}
+                                {% if usr == u %}
+                                    {{ sum }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>bike</td>
+                        {% for day in days_list %}
+                        <td>
+                            {% for a in activity_all %}
+                                {% if a.user == u and a.date.day == day %}
+                                    {{ a.distance }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

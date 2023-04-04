@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div>
+  <h4>Login</h4>
+</div>
+
+<div class="">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <p>
+                    {{ field.label }}
+                    <br/>
+                    {{ field }}
+                </p>
+            </div>
+        {% endfor %}
+        <div class="form-check">
+            <input type="submit" class="btn btn-success" name="Login">
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

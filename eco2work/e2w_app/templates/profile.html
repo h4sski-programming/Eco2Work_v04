@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div>
+    <table class="table">
+        <tr>
+            <td>Today is: <h4>{{ today|date:"l d-F-Y" }}</h4></td>
+            <td>User: <h4>{{ user_active }}</h4></td>
+        </tr>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered">
+        <tr>
+            <th>User</th>
+            <th>Distance [km]</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Day</th>
+        </tr>
+        {% for a in user_activities %}
+            <tr>
+                <td>{{ a.user }}</td>
+                <td>{{ a.distance }}</td>
+                <td>{{ a.date.year }}</td>
+                <td>{{ a.date.month }}</td>
+                <td>{{ a.date.day }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<hr/>
+
+<div>
+    <h3>Testing list</h3>
+    <ul>
+        {% for element in testing_list %}
+            <li>{{element}}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<hr/>
+
+<div>
+    <h3>Testing dictionary</h3>
+    <table class="table table-bordered table-sm">
+        {% for key, value in testing_dictionary.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}
