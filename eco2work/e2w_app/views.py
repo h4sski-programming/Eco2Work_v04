@@ -98,12 +98,16 @@ def show_view(request, year, month):
     month_number_of_days = [x+1 for x in range(date_end.day)]
     
     activities_all_filtered = Activity.objects.filter(date__year=year, date__month=month)
-    
-    users = {a.user for a in activities_all_filtered}
-    activities = {a.user: [] for a in activities_all_filtered}
+    users = {a.user.username: 0  for a in activities_all_filtered}
     for a in activities_all_filtered:
-        activities[a.user].append([a.date.day, a.distance])
-    # print(activities)
+        users[a.user.username] += a.distance
+        # users_sum[a.user.username] += a.distance
+    print(users)
+    
+    activities = {a.user.username: [] for a in activities_all_filtered}
+    for a in activities_all_filtered:
+        activities[a.user.username].append([a.date.day, a.distance])
+    print(activities)
     
     context = {
         'year': year,

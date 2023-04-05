@@ -46,21 +46,24 @@
         <tbody class="table">
             <tr>
                 <th class="col">User</th>
-                <th>Sum</th>
+                <th>
+                    <div>Sum</div>
+                </th>
 
                 {% for i in month_number_of_days %}
-                    <th style="width: 30px">{{ i }}</th>
+                    <th><div style="width: 1em">{{ i }}</div></th>
                 {% endfor %}
             </tr>
 
-            {% for u in users %}
+            {% for username, u_sum in users.items %}
                 <tr>
-                    <td>{{ u.username }}</td>
-                    <td>sum - to do</td>
+                    <td>{{ username }}</td>
+                    <td>{{ u_sum }}</td>
+                    
                     {% for i in month_number_of_days %}
                     <td>
-                        {% for a_user, a_list in activities.items %}
-                            {% if a_user == u %}
+                        {% for a_username, a_list in activities.items %}
+                            {% if a_username == username %}
                                 {% for a in a_list %}
                                     {% if a.0 == i %}
                                         {{ a.1 }}
