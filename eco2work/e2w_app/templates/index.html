@@ -41,11 +41,13 @@
                     <th>Vehicle</th>
 
                     {% for i in days_list %}
+                    <th><div style="width: 1.2em">
                         {% if i == today.day %}
-                            <th class="bg-success text-white">{{ i }}</th>
+                            <div class="text-primary">{{ i }}</div>
                         {% else %}
-                            <th>{{ i }}</th>
+                            <div>{{ i }}</div>
                         {% endif %}
+                    </div></th>
                     {% endfor %}
                 </tr>
 
@@ -61,13 +63,15 @@
                         </td>
                         <td>bike</td>
                         {% for day in days_list %}
-                        <td>
-                            {% for a in activity_all %}
-                                {% if a.user == u and a.date.day == day %}
-                                    {{ a.distance }}
-                                {% endif %}
-                            {% endfor %}
-                        </td>
+                        
+                            <td>
+                                {% for a in activity_all %}
+                                    {% if a.user == u and a.date.day == day and a.distance != 0 %}
+                                    <a href="/edit/user={{ u }}&{{ year }}-{{ month }}-{{ day }}"><div>{{ a.distance }}</div></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        
                         {% endfor %}
                     </tr>
                 {% endfor %}

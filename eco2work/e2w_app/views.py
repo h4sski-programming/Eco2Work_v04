@@ -20,7 +20,8 @@ def index(request):
     days_list = [n for n in range(month_first_day.day, month_last_day.day + 1)]
 
     # activity_all = Activity.objects.all()
-    activity_all = Activity.objects.filter(date__month=today.month)
+    activity_all = Activity.objects.filter(date__month=11, date__year=2022)
+    # activity_all = Activity.objects.filter(date__month=today.month)
     users_all = User.objects.all()
 
     month_sum = {}
@@ -36,6 +37,8 @@ def index(request):
         'users_all': users_all,
         'days_list': days_list,
         'today': today,
+        'year': today.year,
+        'month': today.month,
         'month_sum': month_sum,
         }
     return render(request, 'index.html', context)
@@ -123,6 +126,46 @@ def show_view(request, year, month):
         'users': users,
     }
     return render(request, 'show.html', context)
+
+
+
+@login_required(login_url='edit_view')
+def edit_view(request, username, year, month, day):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    
+    u = User.objects.filter(username=username)
+    activity = Activity.objects.filter(user=u, date=date(year=year, month=month, day=day))
+    
+    # today = date.today()
+    # if year > today.year or \
+    #     (year == today.year and month > today.month) \
+    #         or (year == today.year and month > today.month and day > today.day):
+    #     messages.error(request, f'Incorrect year, cant look into future. Today is {today}.')
+    #     return redirect('index')
+    
+    
+    activities_all_filtered = Activity.objects.filter(date__year=year, date__month=month)
+    users = {a.user.username: 0  for a in activities_all_filtered}
+    for a in activities_all_filtered:
+        users[a.user.username] += a.distance
+        # users_sum[a.user.username] += a.distance
+    print(users)
+    
+    activities = {a.user.username: [] for a in activities_all_filtered}
+    for a in activities_all_filtered:
+        activities[a.user.username].append([a.date.day, a.distance])
+    print(activities)
+    
+    context = {
+        'year': year,
+        'month': month,
+        'activities': activities,
+        'activity': activity,
+        'users': users,
+    }
+    return render(request, 'edit.html', context)
+
 
 
 def register_view(request):

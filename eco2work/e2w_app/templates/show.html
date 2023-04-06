@@ -60,13 +60,14 @@
                     <td>{{ username }}</td>
                     <td>{{ u_sum }}</td>
                     
-                    {% for i in month_number_of_days %}
+                    {% for day in month_number_of_days %}
                     <td>
                         {% for a_username, a_list in activities.items %}
                             {% if a_username == username %}
                                 {% for a in a_list %}
-                                    {% if a.0 == i %}
+                                    {% if a.0 == day %}
                                         {{ a.1 }}
+                                        <a href="/edit/username={{ a_username }}&{{ year }}-{{ month }}-{{ day }}/"><div>{{ a.1 }}</div></a>
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
