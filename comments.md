@@ -7,7 +7,7 @@ General purpose is to implement it in Creadis company.
 
 Goal at some page is to have activities visible in calendar-look table.
 
-## DB models
+# DB models
 
 ### `Activity`
 
@@ -28,6 +28,30 @@ Have implemented `__str__` function, which return `{distance} {vehicle} {date}`.
 
 Some useful links and hints used during development of this
 application.
+
+
+### Data structures for 'views.py' / 'def show_view(request, year, month):'
+
+    users = {
+        'username': <int> sum_of_distances_in_the_month,
+        'username': <int> sum_of_distances_in_the_month,
+    }
+
+    activities = {
+        'username': [
+            # [day, distance_km],
+            [1, 0],
+            [2, 3],
+            [3, 2],
+            [4, 0],
+            ...
+        ]
+    }
+
+### edit_view
+
+Struggeling with geting activity data from bd based on passed 'username' and 'date'. I think that I might need to change it to passing activity ID.
+
 
 ## Links
 
