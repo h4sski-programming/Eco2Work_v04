@@ -97,9 +97,6 @@ def show_view(request, year, month):
     elif month == 12:
         month_p1 = 1
     
-    # date_start = date(year=year, month=month, day=1)
-    # date_end = date_start + relativedelta(months=+1) - timedelta(days=1)
-    # month_number_of_days = [x+1 for x in range(date_end.day)]
     month_number_of_days = [x+1 for x in range(monthrange(year=year, month=month)[1])]
     
     

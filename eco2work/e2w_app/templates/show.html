@@ -83,27 +83,35 @@
 
 <div>
     <table class="table table-bordered table-sm table-striped table-responsive">
-        <tr>
-            <th>Username</th>
-            <th>ID</th>
-            <th>Mail</th>
-            <th>Sum</th>
-            <th>Activities</th>
-        </tr>
-        {% for u, inner_dictionary in act_01.items %}
-        <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.id }}</td>
-            <td>{{ u.email }}</td>
-            {% for key, value in inner_dictionary.items %}
-                {% if key == 'distance_sum' %}
-                <td>{{ value }}</td>
-                {% elif key == 'activities' %}
-                <td>{{ value }}</td>
-                {% endif %}
+        <tbody class="table">
+            <tr>
+                <th class="col">Username</th>
+                <th>Sum</th>
+                {% for day in month_number_of_days %}
+                <th><div style="width: 1.1em">{{ day }}</div></th>
+                {% endfor %}
+            </tr>
+            {% for u, inner_dictionary in act_01.items %}
+            <tr>
+                <td>{{ u.username }}</td>
+                {% for key, value in inner_dictionary.items %}
+                    {% if key == 'distance_sum' %}
+                    <td>{{ value }}</td>
+                    {% elif key == 'activities' %}
+                        {% for day in month_number_of_days %}
+                        <td>
+                            {% for a in value %}
+                                {% if day == a.date.day %}
+                                {{ a.distance }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-        {% endfor %}
+        </tbody>
     </table>
 </div>
 
