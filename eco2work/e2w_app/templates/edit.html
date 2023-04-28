@@ -3,7 +3,42 @@
 {% block title %}Edit{% endblock %}
 
 {% block content %}
+
 <div>
-{{ activity }}
+    <table class="table table-bordered table-sm table-striped">
+        <tbody class="table">
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Distance [km]</th>
+                <th>Edit distance [km]</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>{{ activity.id }}</td>
+                <td>{{ activity.user }}</td>
+                <td>{{ activity.date.isoformat }}</td>
+                <td>{{ activity.distance }}</td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <td>
+                        {{ form.as_p }}
+                    </td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
+
+<hr/>
+
+<div>
+    {{ activity }}
+</div>
+
 {% endblock %}

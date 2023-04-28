@@ -19,3 +19,6 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput,
         help_text='Enter your password'
         )
+
+class ActivityEditForm(forms.Form):
+    distance = forms.IntegerField(label="", min_value=0)

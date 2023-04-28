@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 from calendar import monthrange
 
 from .models import Activity
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ActivityEditForm
 
 
 @login_required(login_url='login_view')
@@ -124,6 +124,9 @@ def show_view(request, year, month):
         inner_dict.update({'distance_sum': sum(x.distance for x in inner_dict['activities'])})
     # print(act_01)
     
+    
+    
+    
     context = {
         'year': year,
         'month': month,
@@ -176,6 +179,32 @@ def edit_view(request, username, year, month, day):
         'activities': activities,
         'activity': activity,
         'users': users,
+    }
+    return render(request, 'edit.html', context)
+
+
+@login_required(login_url='edit_view')
+def edit_view(request, activity_id):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    
+    activity = Activity.objects.get(id=activity_id)
+    form = ActivityEditForm()
+    
+    
+    if request.method == 'POST':
+        form_input = ActivityEditForm(request.POST)
+        if form_input.is_valid():
+            # print(form_input.cleaned_data['distance'])
+            activity.distance = form_input.cleaned_data['distance']
+        else:
+            print('Form_input is not valid. Value was not changed.')
+    
+    
+    
+    context = {
+        'activity': activity,
+        'form': form,
     }
     return render(request, 'edit.html', context)
 

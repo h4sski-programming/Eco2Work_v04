@@ -102,7 +102,9 @@
                         <td>
                             {% for a in value %}
                                 {% if day == a.date.day %}
-                                {{ a.distance }}
+                                <a href="/edit/activity_id={{ a.id }}/">
+                                    {{ a.distance }}
+                                </a>
                                 {% endif %}
                             {% endfor %}
                         </td>
