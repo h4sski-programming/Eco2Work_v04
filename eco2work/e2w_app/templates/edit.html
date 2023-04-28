@@ -4,11 +4,17 @@
 
 {% block content %}
 
+
+<div class="mb-3">
+    <a href="/show/{{ a_date.year }}-{{ a_date.month }}" class="btn btn-warning">
+        Back to {{ a_date.year }}-{{ a_date.month }}
+    </a>
+</div>
+
 <div>
     <table class="table table-bordered table-sm table-striped">
         <tbody class="table">
             <tr>
-                <th>ID</th>
                 <th>User</th>
                 <th>Date</th>
                 <th>Distance [km]</th>
@@ -16,19 +22,23 @@
                 <th></th>
             </tr>
             <tr>
-                <td>{{ activity.id }}</td>
                 <td>{{ activity.user }}</td>
                 <td>{{ activity.date.isoformat }}</td>
                 <td>{{ activity.distance }}</td>
                 <form action="" method="post">
-                    {% csrf_token %}
-                    <td>
-                        {{ form.as_p }}
-                    </td>
-                    <td>
-                        <input type="submit" class="btn btn-primary" value="Save">
-                    </td>
+                {% csrf_token %}
+                <td>
+                    {{ form.as_p }}
+                </td>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="Save">
                 </form>
+                <form action="remove/activity_id={{ activity.id }}/" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Delete_form">
+                </form>
+                <a href="remove/activity_id={{ activity.id }}/" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>

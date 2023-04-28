@@ -101,10 +101,22 @@
                         {% for day in month_number_of_days %}
                         <td>
                             {% for a in value %}
-                                {% if day == a.date.day %}
+                                {% if day == a.date.day and a.distance != 0 %}
                                 <a href="/edit/activity_id={{ a.id }}/">
                                     {{ a.distance }}
                                 </a>
+                                {% else %}
+                                <a href="/edit/username={{ u.username }}&{{ year }}-{{ month }}-{{ day }}/">_</a>
+                                {% endif %}
+                            {% endfor %}
+                            <hr/>
+                            {% for a in value %}
+                                {% if day in a.date.day %}
+                                <a href="/edit/activity_id={{ a.id }}/">
+                                    {{ a.distance }}
+                                </a>
+                                {% else %}
+                                <a href="/edit/username={{ u.username }}&{{ year }}-{{ month }}-{{ day }}/">_</a>
                                 {% endif %}
                             {% endfor %}
                         </td>

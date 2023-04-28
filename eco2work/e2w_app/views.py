@@ -145,13 +145,28 @@ def show_view(request, year, month):
 
 
 
-@login_required(login_url='edit_view')
-def edit_view(request, username, year, month, day):
+@login_required(login_url='edit_view_new')
+def edit_view_new(request, username, year, month, day):
     if not request.user.is_authenticated:
         return redirect('index')
     
-    u = User.objects.filter(username=username)
-    activity = Activity.objects.filter(user=u, date=date(year=year, month=month, day=day))
+    a_date = date(year=year, month=month, day=day)
+    u = User.objects.get(username=username)
+    
+    # activity = Activity.objects.filter(user=u, date=date(year=year, month=month, day=day))
+    activity = Activity.objects.create(user=u, distance=0, date=a_date)
+    print(activity)
+    
+    form = ActivityEditForm()
+    
+    if request.method == 'POST':
+        form_input = ActivityEditForm(request.POST)
+        if form_input.is_valid():
+            # print(form_input.cleaned_data['distance'])
+            activity.distance = form_input.cleaned_data['distance']
+            activity.save()
+        else:
+            print('Form_input is not valid. Value was not changed.')
     
     # today = date.today()
     # if year > today.year or \
@@ -161,24 +176,13 @@ def edit_view(request, username, year, month, day):
     #     return redirect('index')
     
     
-    activities_all_filtered = Activity.objects.filter(date__year=year, date__month=month)
-    users = {a.user.username: 0  for a in activities_all_filtered}
-    for a in activities_all_filtered:
-        users[a.user.username] += a.distance
-        # users_sum[a.user.username] += a.distance
-    print(users)
-    
-    activities = {a.user.username: [] for a in activities_all_filtered}
-    for a in activities_all_filtered:
-        activities[a.user.username].append([a.date.day, a.distance])
-    print(activities)
-    
     context = {
-        'year': year,
-        'month': month,
-        'activities': activities,
+        # 'year': year,
+        # 'month': month,
+        'u': u,
         'activity': activity,
-        'users': users,
+        'form': form,
+        'a_date': a_date,
     }
     return render(request, 'edit.html', context)
 
@@ -205,9 +209,18 @@ def edit_view(request, activity_id):
     context = {
         'activity': activity,
         'form': form,
+        'a_date': activity.date,
     }
     return render(request, 'edit.html', context)
 
+@login_required(login_url='remove_activity')
+def remove_activity(request, activity_id):
+    
+    if request.method == 'post':
+        Activity.objects.get(id=activity_id).delete()
+        return redirect('index')
+        
+    return redirect('index')
 
 
 def register_view(request):
