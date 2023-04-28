@@ -22,4 +22,4 @@ class Activity(models.Model):
     time_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.user.username} {self.distance} {self.vehicle} {self.date}'
+        return f'{self.user.username} {self.distance}km {self.date}'

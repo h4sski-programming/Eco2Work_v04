@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+from calendar import monthrange
 
 from .models import Activity
 from .forms import RegisterForm, LoginForm
@@ -96,21 +97,35 @@ def show_view(request, year, month):
     elif month == 12:
         month_p1 = 1
     
-    date_start = date(year=year, month=month, day=1)
-    date_end = date_start + relativedelta(months=+1) - timedelta(days=1)
-    month_number_of_days = [x+1 for x in range(date_end.day)]
+    # date_start = date(year=year, month=month, day=1)
+    # date_end = date_start + relativedelta(months=+1) - timedelta(days=1)
+    # month_number_of_days = [x+1 for x in range(date_end.day)]
+    month_number_of_days = [x+1 for x in range(monthrange(year=year, month=month)[1])]
+    
     
     activities_all_filtered = Activity.objects.filter(date__year=year, date__month=month)
     users = {a.user.username: 0  for a in activities_all_filtered}
     for a in activities_all_filtered:
         users[a.user.username] += a.distance
         # users_sum[a.user.username] += a.distance
-    print(users)
+    # print(users)
     
     activities = {a.user.username: [] for a in activities_all_filtered}
     for a in activities_all_filtered:
         activities[a.user.username].append([a.date.day, a.distance])
-    print(activities)
+    # print(activities)
+    
+    
+    # testing other way to pass activities to html template
+    '''
+    Idea of the structure is:
+    {user: {distance_sum: distance_sum, activities: [a1, a2, a3, a4, a5, ...] } }
+    '''
+    act_01 = {u: {'distance_sum': 0, 'activities': []} for u in User.objects.all()}
+    for u, inner_dict in act_01.items():
+        inner_dict.update({'activities': list(a for a in Activity.objects.filter(user = u, date__year=year, date__month=month))})
+        inner_dict.update({'distance_sum': sum(x.distance for x in inner_dict['activities'])})
+    # print(act_01)
     
     context = {
         'year': year,
@@ -119,10 +134,11 @@ def show_view(request, year, month):
         'year_p1': year_p1,
         'month_m1': month_m1,
         'month_p1': month_p1,
-        'date_start': date_start,
-        'date_end': date_end,
+        # 'date_start': date_start,
+        # 'date_end': date_end,
         'month_number_of_days': month_number_of_days,
         'activities': activities,
+        'act_01': act_01,
         'users': users,
     }
     return render(request, 'show.html', context)

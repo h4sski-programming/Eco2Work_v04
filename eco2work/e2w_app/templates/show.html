@@ -81,5 +81,31 @@
     </table>
 </div>
 
+<div>
+    <table class="table table-bordered table-sm table-striped table-responsive">
+        <tr>
+            <th>Username</th>
+            <th>ID</th>
+            <th>Mail</th>
+            <th>Sum</th>
+            <th>Activities</th>
+        </tr>
+        {% for u, inner_dictionary in act_01.items %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.id }}</td>
+            <td>{{ u.email }}</td>
+            {% for key, value in inner_dictionary.items %}
+                {% if key == 'distance_sum' %}
+                <td>{{ value }}</td>
+                {% elif key == 'activities' %}
+                <td>{{ value }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
 
 {% endblock %}
